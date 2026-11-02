@@ -8,7 +8,6 @@ from src.predict import IrisPredictor
 # Page setup
 st.set_page_config(
     page_title="Iris Petal Length Predictor",
-    page_icon="🌸",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
@@ -138,7 +137,7 @@ metrics = load_metrics()
 st.markdown(
     """
     <div class="app-header">
-        <h1>🌸 Iris Petal Length Predictor</h1>
+        <h1>Iris Petal Length Predictor</h1>
         <p>Enter flower measurements to predict petal length using Linear Regression</p>
     </div>
     """,
@@ -154,29 +153,31 @@ if "petal_width" not in st.session_state:
     st.session_state.petal_width = 1.3
 
 # Quick Sample Buttons
-st.markdown("<p style='font-size: 0.9rem; color: #94a3b8; margin-bottom: 6px;'><b>⚡ Quick Fill:</b></p>",
-            unsafe_allow_html=True)
+st.markdown(
+    "<p style='font-size: 0.9rem; color: #94a3b8; margin-bottom: 6px;'><b>Quick Presets:</b></p>",
+    unsafe_allow_html=True,
+)
 col_b1, col_b2, col_b3, col_b4 = st.columns(4)
 
-if col_b1.button("🌿 Iris Setosa", use_container_width=True):
+if col_b1.button("Setosa", use_container_width=True):
     st.session_state.sepal_length = 5.0
     st.session_state.sepal_width = 3.4
     st.session_state.petal_width = 0.2
     st.rerun()
 
-if col_b2.button("🌺 Iris Versicolor", use_container_width=True):
+if col_b2.button("Versicolor", use_container_width=True):
     st.session_state.sepal_length = 5.9
     st.session_state.sepal_width = 2.8
     st.session_state.petal_width = 1.3
     st.rerun()
 
-if col_b3.button("🌸 Iris Virginica", use_container_width=True):
+if col_b3.button("Virginica", use_container_width=True):
     st.session_state.sepal_length = 6.5
     st.session_state.sepal_width = 3.0
     st.session_state.petal_width = 2.0
     st.rerun()
 
-if col_b4.button("🔄 Reset", use_container_width=True):
+if col_b4.button("Reset", use_container_width=True):
     st.session_state.sepal_length = 5.8
     st.session_state.sepal_width = 3.0
     st.session_state.petal_width = 1.3
@@ -186,7 +187,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Main Input Section
 with st.container():
-    st.markdown("### 📝 Enter Floral Measurements")
+    st.markdown("### Enter Floral Measurements")
 
     col1, col2, col3 = st.columns(3)
 
@@ -222,7 +223,7 @@ with st.container():
 
 # Predict Button & Prediction Computation
 st.markdown("<br>", unsafe_allow_html=True)
-predict_clicked = st.button("🔮 Predict Petal Length", type="primary", use_container_width=True)
+predict_clicked = st.button("Predict Petal Length", type="primary", use_container_width=True)
 
 # Generate Prediction
 predicted_value = predictor.predict(
@@ -236,17 +237,14 @@ if predicted_value < 2.5:
     species_name = "Iris Setosa"
     species_desc = "Typically small petals (1.0 – 1.9 cm)"
     tag_class = "tag-setosa"
-    icon = "🌿"
 elif predicted_value < 5.0:
     species_name = "Iris Versicolor"
     species_desc = "Medium-sized petals (3.0 – 5.1 cm)"
     tag_class = "tag-versicolor"
-    icon = "🌺"
 else:
     species_name = "Iris Virginica"
     species_desc = "Large floral petals (4.5 – 6.9 cm)"
     tag_class = "tag-virginica"
-    icon = "🌸"
 
 # Display Prediction Output Card
 st.markdown(
@@ -255,7 +253,7 @@ st.markdown(
         <div class="result-label">Predicted Petal Length</div>
         <div class="result-value">{predicted_value:.2f}<span class="result-unit">cm</span></div>
         <div>
-            <span class="species-tag {tag_class}">{icon} Most Likely: <b>{species_name}</b> ({species_desc})</span>
+            <span class="species-tag {tag_class}">Most Likely: <b>{species_name}</b> ({species_desc})</span>
         </div>
     </div>
     """,
@@ -263,7 +261,6 @@ st.markdown(
 )
 
 # Relative size indicator progress bar
-# Normalized between 1.0cm and 7.0cm
 progress_pct = min(max((predicted_value - 1.0) / 6.0, 0.0), 1.0)
 st.markdown("<br>", unsafe_allow_html=True)
 st.caption(f"Relative Floral Scale: **{predicted_value:.2f} cm** (Iris species range: 1.0 cm – 7.0 cm)")
@@ -271,7 +268,7 @@ st.progress(progress_pct)
 
 # Clean, Collapsible Model Details at the bottom
 if metrics:
-    with st.expander("ℹ️ How the prediction is calculated"):
+    with st.expander("How the prediction is calculated"):
         coef = metrics["model_parameters"]["coefficients"]
         intercept = metrics["model_parameters"]["intercept"]
         r2 = metrics["metrics"]["test_r2"]
