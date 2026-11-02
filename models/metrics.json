@@ -1,0 +1,26 @@
+{
+  "dataset": "Iris (scikit-learn)",
+  "target": "petal_length",
+  "features": [
+    "sepal_length",
+    "sepal_width",
+    "petal_width"
+  ],
+  "train_samples": 120,
+  "test_samples": 30,
+  "metrics": {
+    "train_r2": 0.9698,
+    "test_r2": 0.9603,
+    "test_mse": 0.13,
+    "test_rmse": 0.3606,
+    "test_mae": 0.2605
+  },
+  "model_parameters": {
+    "intercept": -0.2622,
+    "coefficients": {
+      "sepal_length": 0.7228,
+      "sepal_width": -0.6358,
+      "petal_width": 1.4675
+    }
+  }
+}
